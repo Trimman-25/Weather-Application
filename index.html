@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+             <input type="text" placeholder="Enter the city name" spellcheck="false">
+             <button><img src="https://www.shutterstock.com/image-vector/magnifying-glass-search-icon-flat-260nw-738763579.jpg"></button>
+        </div> 
+        <div class="weather">
+            <img src="https://cdn-icons-png.flaticon.com/512/678/678310.png" class="weather-icon">
+            <h1 class="temp">22°C</h1>
+            <h1 class="city">Rajahmundry</h1>
+            <div class="details">
+                <div class="col">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4148/4148388.png"> 
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p></p>
+                    </div>
+                </div>
+                 <div class="col">
+                    <img src="https://c8.alamy.com/comp/2GMHBH9/windy-weather-color-line-icon-sign-for-web-page-mobile-app-button-logo-editable-stroke-2GMHBH9.jpg"> 
+                    <div>
+                        <p class="wind">15km/hr</p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      const apikey = "ec2cb8d69af1952b783d724050aa9f1f";
+const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        const searchBox =document.querySelector(".search input")
+        const searchBtn =document.querySelector(".search button")
+
+
+async function checkweather(city = "Rajahmundry"){
+    const response = await fetch(apiURL + city + `&appid=${apikey}`);
+    var data = await response.json();
+    console.log(data);
+    
+    // Update DOM elements INSIDE the function where data is available
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+}
+
+checkweather();
+
+
+    searchBtn.addEventListener("click",() =>{
+        checkweather(searchBox.value);
+    })
+    </script>
+
+</body>
+</html>
